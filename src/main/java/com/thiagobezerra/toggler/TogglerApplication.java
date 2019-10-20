@@ -9,5 +9,4 @@ public class TogglerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TogglerApplication.class, args);
 	}
-
 }
