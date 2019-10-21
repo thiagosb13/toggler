@@ -1,6 +1,6 @@
 package com.thiagobezerra.toggler.controller;
 
-import com.thiagobezerra.toggler.model.Toggle;
+import com.thiagobezerra.toggler.controller.dto.ToggleDTO;
 import com.thiagobezerra.toggler.service.ToggleService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +19,7 @@ public class ToggleController {
 
     @PostMapping("/toggles")
     @ResponseStatus(CREATED)
-    public String save(@RequestBody Toggle toggle) {
-        return toggleService.save(toggle);
+    public String save(@RequestBody ToggleDTO toggleDTO) {
+        return toggleService.save(toggleDTO.toToggle());
     }
 }

@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateToggleControllerTest {
+public class ToggleControllerTest {
     private MockMvc mockMvc;
 
     @Mock
@@ -32,7 +32,7 @@ public class CreateToggleControllerTest {
     }
 
     @Test
-    public void when_toggle_is_valid_should_return_created() throws Exception {
+    public void given_creating_a_toggle_when_it_is_valid_should_return_created() throws Exception {
         var request = "{ \"name\" : \"isButtonBlue\", \"value\" : true }";
         mockMvc.perform(post("/toggles").contentType(MediaType.APPLICATION_JSON)
                                         .content(request))
@@ -40,7 +40,7 @@ public class CreateToggleControllerTest {
     }
 
     @Test
-    public void when_toggle_already_exists_should_return_unprocessable_entity() throws Exception {
+    public void given_creating_a_toggle_when_it_already_exists_should_return_unprocessable_entity() throws Exception {
         when(toggleService.save(any(Toggle.class))).thenThrow(new IllegalArgumentException());
 
         var request = "{ \"name\" : \"isButtonBlue\", \"value\" : true }";

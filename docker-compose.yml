@@ -1,0 +1,14 @@
+version: '3'
+services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:17474"
+      - "7687:7687"
+    volumes:
+      - ./neo4j/plugins:/plugins
+      - ./data:/data
+      - ./conf:/conf
+    environment:
+      NEO4J_AUTH: toggler/toggler
+      NEO4J_dbms_logs_debug_level: DEBUG

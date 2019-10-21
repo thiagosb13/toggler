@@ -1,1 +1,6 @@
-
+spring:
+  data:
+    neo4j:
+      username: toggler
+      password: toggler
+      open-in-view: false
