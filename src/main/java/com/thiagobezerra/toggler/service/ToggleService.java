@@ -31,11 +31,14 @@ public class ToggleService {
 
     @Transactional
     public String update(Toggle toggle) {
-        if (!toggleRepository.existsById(toggle.getName())) {
-            throw new NotFoundException(format("A toggle named %s was not found. You can create one if you wish.", toggle.getName()));
-        }
+        var foundToggle = toggleRepository.findById(toggle.getName())
+                                          .orElseThrow(() -> new NotFoundException(format("A toggle named %s was not found. You can create one if you wish.", toggle.getName())));
 
-        toggleRepository.save(toggle);
+        foundToggle.setRestrictions(toggle.getRestrictions());
+        foundToggle.setOverrides(toggle.getOverrides());
+        foundToggle.setExceptions(toggle.getExceptions());
+        foundToggle.setValue(toggle.getValue());
+        toggleRepository.save(foundToggle);
 
         return toggle.getName();
     }
@@ -46,6 +49,6 @@ public class ToggleService {
     }
 
     public List<String> findByService(String name, String version) {
-        return toggleRepository.findByService(name, version);
+        return List.of();//toggleRepository.findByService(name, version);
     }
 }

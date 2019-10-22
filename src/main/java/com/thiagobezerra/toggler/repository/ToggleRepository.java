@@ -5,8 +5,6 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ToggleRepository extends Neo4jRepository<Toggle, String> {
     @Query("MATCH (n:Toggle { name: {name} }) " +
@@ -14,6 +12,5 @@ public interface ToggleRepository extends Neo4jRepository<Toggle, String> {
            "RETURN n.name")
     String update(String name, Boolean value);
 
-    @Query("")
-    List<String> findByService(String serviceName, String serviceVersion);
+//    List<String> findByService(String serviceName, String serviceVersion);
 }
