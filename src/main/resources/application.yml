@@ -1,6 +1,5 @@
 spring:
   data:
     neo4j:
-      username: toggler
-      password: toggler
-      open-in-view: false
+      username: neo4j
+      password: test
