@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 public class ToggleController {
@@ -31,11 +32,13 @@ public class ToggleController {
     }
 
     @PutMapping("/toggles")
+    @ResponseStatus(CREATED)
     public String update(@RequestBody ToggleDTO toggleDTO) {
         return toggleService.update(toggleDTO.toToggle());
     }
 
     @PatchMapping("/toggles/{name}")
+    @ResponseStatus(NO_CONTENT)
     public void changeToggle(@PathVariable String name, @RequestParam(value = "value") Boolean value) {
         toggleService.update(name, value);
     }

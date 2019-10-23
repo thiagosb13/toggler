@@ -76,7 +76,7 @@ class ToggleControllerTest {
     }
 
     @Test
-    void given_updating_a_toggle_when_it_is_valid_should_return_ok() throws Exception {
+    void given_updating_a_toggle_when_it_is_valid_should_return_created() throws Exception {
         when(toggleService.update(any(Toggle.class))).thenReturn("name");
 
         var toggleDTO = new ToggleDTO("isButtonBlue", false, Set.of(), Set.of(new ServiceDTO("ABC", "1.0")), Set.of());
@@ -84,7 +84,7 @@ class ToggleControllerTest {
 
         mockMvc.perform(put("/toggles").contentType(MediaType.APPLICATION_JSON)
                                        .content(request))
-               .andExpect(status().isOk())
+               .andExpect(status().isCreated())
                .andExpect(jsonPath("$", is("name")));
 
         verify(toggleService, times(1)).update(any(Toggle.class));
@@ -104,11 +104,11 @@ class ToggleControllerTest {
     }
 
     @Test
-    void given_updating_a_toggle_value_when_it_is_valid_should_return_ok() throws Exception {
+    void given_updating_a_toggle_value_when_it_is_valid_should_return_no_content() throws Exception {
         doNothing().when(toggleService).update("isButtonBlue", true);
 
         mockMvc.perform(patch("/toggles/isButtonBlue?value=true"))
-               .andExpect(status().isOk());
+               .andExpect(status().isNoContent());
 
         verify(toggleService, times(1)).update("isButtonBlue", true);
     }
