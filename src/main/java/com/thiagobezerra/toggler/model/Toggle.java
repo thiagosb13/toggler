@@ -27,6 +27,17 @@ public class Toggle {
     @Relationship(type = "EXCEPTED_BY")
     private Set<Service> exceptions;
 
+    public Toggle() {
+    }
+
+    public Toggle(String name, Boolean value, Set<Service> restrictions, Set<Service> overrides, Set<Service> exceptions) {
+        this.name = name;
+        this.value = value;
+        this.restrictions = restrictions;
+        this.overrides = overrides;
+        this.exceptions = exceptions;
+    }
+
     public String getName() {
         return name;
     }
