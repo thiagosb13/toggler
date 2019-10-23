@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static java.lang.String.format;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
 public class ToggleService {
@@ -45,7 +46,11 @@ public class ToggleService {
 
     @Transactional
     public void update(String name, Boolean value) {
-        toggleRepository.update(name, value);
+        var updatedToggle = toggleRepository.update(name, value);
+
+        if (isEmpty(updatedToggle)) {
+            throw new NotFoundException(format("Cannot update toggle named %s due to it was not found.", name));
+        }
     }
 
     public List<String> findByService(String name, String version) {
