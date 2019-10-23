@@ -49,6 +49,6 @@ public class ToggleService {
     }
 
     public List<String> findByService(String name, String version) {
-        return List.of();//toggleRepository.findByService(name, version);
+        return toggleRepository.findByService(name, version);
     }
 }
