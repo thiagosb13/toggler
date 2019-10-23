@@ -44,8 +44,8 @@ public class ToggleService {
     }
 
     @Transactional
-    public String update(String name, Boolean value) {
-        return toggleRepository.update(name, value);
+    public void update(String name, Boolean value) {
+        toggleRepository.update(name, value);
     }
 
     public List<String> findByService(String name, String version) {

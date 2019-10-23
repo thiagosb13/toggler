@@ -1,12 +1,12 @@
 package com.thiagobezerra.toggler.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 public class ServiceDTO {
     private String name;
     private String version;
 
-    @JsonCreator
+    public ServiceDTO() {
+    }
+
     public ServiceDTO(String name, String version) {
         this.name = name;
         this.version = version;
@@ -16,7 +16,15 @@ public class ServiceDTO {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getVersion() {
         return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

@@ -1,6 +1,5 @@
 package com.thiagobezerra.toggler.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.thiagobezerra.toggler.model.Service;
 import com.thiagobezerra.toggler.model.Toggle;
 
@@ -14,7 +13,9 @@ public class ToggleDTO {
     private Set<ServiceDTO> overrides;
     private Set<ServiceDTO> exceptions;
 
-    @JsonCreator
+    public ToggleDTO() {
+    }
+
     public ToggleDTO(String name, Boolean value, Set<ServiceDTO> restrictions, Set<ServiceDTO> overrides, Set<ServiceDTO> exceptions) {
         this.name = name;
         this.value = value;
@@ -27,20 +28,40 @@ public class ToggleDTO {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Boolean getValue() {
         return value;
+    }
+
+    public void setValue(Boolean value) {
+        this.value = value;
     }
 
     public Set<ServiceDTO> getRestrictions() {
         return restrictions;
     }
 
+    public void setRestrictions(Set<ServiceDTO> restrictions) {
+        this.restrictions = restrictions;
+    }
+
     public Set<ServiceDTO> getOverrides() {
         return overrides;
     }
 
+    public void setOverrides(Set<ServiceDTO> overrides) {
+        this.overrides = overrides;
+    }
+
     public Set<ServiceDTO> getExceptions() {
         return exceptions;
+    }
+
+    public void setExceptions(Set<ServiceDTO> exceptions) {
+        this.exceptions = exceptions;
     }
 
     public Toggle toToggle() {

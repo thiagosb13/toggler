@@ -36,8 +36,8 @@ public class ToggleController {
     }
 
     @PatchMapping("/toggles/{name}")
-    public String changeToggle(@PathVariable String name, @RequestParam(value = "value") Boolean value) {
-        return toggleService.update(name, value);
+    public void changeToggle(@PathVariable String name, @RequestParam(value = "value") Boolean value) {
+        toggleService.update(name, value);
     }
 
     @GetMapping("/services/{name}/{version}/toggles")
