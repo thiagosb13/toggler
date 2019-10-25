@@ -9,14 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static java.lang.String.format;
-import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
 public class ToggleService {
     private final ToggleRepository toggleRepository;
+    private final NotificationService notificationService;
 
-    public ToggleService(ToggleRepository toggleRepository) {
+    public ToggleService(ToggleRepository toggleRepository, NotificationService notificationService) {
         this.toggleRepository = toggleRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -25,9 +26,7 @@ public class ToggleService {
             throw new IllegalArgumentException(format("There's already a toggle named %s. You should updated it if you wish.", toggle.getName()));
         }
 
-        toggleRepository.save(toggle);
-
-        return toggle.getName();
+        return saveOrUpdate(toggle);
     }
 
     @Transactional
@@ -39,7 +38,14 @@ public class ToggleService {
         foundToggle.setOverrides(toggle.getOverrides());
         foundToggle.setExceptions(toggle.getExceptions());
         foundToggle.setValue(toggle.getValue());
-        toggleRepository.save(foundToggle);
+
+        return saveOrUpdate(foundToggle);
+    }
+
+    private String saveOrUpdate(Toggle toggle) {
+        toggleRepository.save(toggle);
+
+        notificationService.notify(toggle);
 
         return toggle.getName();
     }
@@ -48,9 +54,11 @@ public class ToggleService {
     public void update(String name, Boolean value) {
         var updatedToggle = toggleRepository.update(name, value);
 
-        if (isEmpty(updatedToggle)) {
+        if (updatedToggle.isEmpty()) {
             throw new NotFoundException(format("Cannot update toggle named %s due to it was not found.", name));
         }
+
+        notificationService.notify(updatedToggle);
     }
 
     public List<String> findByService(String name, String version) {

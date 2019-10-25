@@ -1,10 +1,12 @@
 package com.thiagobezerra.toggler.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.io.IOException;
 import java.util.Set;
 
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
@@ -76,5 +78,14 @@ public class Toggle {
 
     public void setExceptions(Set<Service> exceptions) {
         this.exceptions = exceptions;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (IOException e) {
+            return String.format("{ id: %s }", getName());
+        }
     }
 }

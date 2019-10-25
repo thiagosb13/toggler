@@ -11,11 +11,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -28,9 +30,12 @@ class ToggleServiceTest {
     @Mock
     private ToggleRepository toggleRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     @BeforeEach
     void setup() {
-        toggleService = new ToggleService(toggleRepository);
+        toggleService = new ToggleService(toggleRepository, notificationService);
     }
 
     @Test
@@ -56,6 +61,7 @@ class ToggleServiceTest {
         toggleService.save(toggle);
 
         verify(toggleRepository, times(1)).save(toggle);
+        verify(notificationService, times(1)).notify(any());
     }
 
     @Test
@@ -83,11 +89,12 @@ class ToggleServiceTest {
         toggleService.update(toggle);
 
         verify(toggleRepository, times(1)).save(foundToggle);
+        verify(notificationService, times(1)).notify(any());
     }
 
     @Test
     void given_updating_value_of_a_toggle_when_it_does_not_exist_should_thrown_an_exception() {
-        when(toggleRepository.update("isButtonBlue", true)).thenReturn(null);
+        when(toggleRepository.update("isButtonBlue", true)).thenReturn(Optional.empty());
 
         var toggle = new Toggle();
         toggle.setName("isButtonBlue");
@@ -98,15 +105,14 @@ class ToggleServiceTest {
 
     @Test
     void given_updating_value_of_a_toggle_when_it_exists_should_update_it() {
-        var toggleName = "isButtonBlue";
-        when(toggleRepository.update(toggleName, true)).thenReturn(toggleName);
-
-        var toggle = new Toggle();
-        toggle.setName(toggleName);
+        var toggle = new Toggle("isButtonBlue", true, Set.of(), Set.of(), Set.of());
+        var toggleName = toggle.getName();
+        when(toggleRepository.update(toggleName, true)).thenReturn(Optional.of(toggle));
 
         toggleService.update(toggleName, true);
 
         verify(toggleRepository, times(1)).update(toggleName, true);
+        verify(notificationService, times(1)).notify(any());
     }
 
     @Test
