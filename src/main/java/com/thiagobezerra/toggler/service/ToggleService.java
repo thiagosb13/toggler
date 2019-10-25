@@ -3,6 +3,8 @@ package com.thiagobezerra.toggler.service;
 import com.thiagobezerra.toggler.exception.NotFoundException;
 import com.thiagobezerra.toggler.model.Toggle;
 import com.thiagobezerra.toggler.repository.ToggleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,8 @@ import static java.lang.String.format;
 
 @Service
 public class ToggleService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ToggleService.class);
+
     private final ToggleRepository toggleRepository;
     private final NotificationService notificationService;
 
@@ -45,6 +49,8 @@ public class ToggleService {
     private String saveOrUpdate(Toggle toggle) {
         toggleRepository.save(toggle);
 
+        LOGGER.info(format("Toggle persisted: %s", toggle.toString()));
+
         notificationService.notify(toggle);
 
         return toggle.getName();
@@ -57,6 +63,8 @@ public class ToggleService {
         if (updatedToggle.isEmpty()) {
             throw new NotFoundException(format("Cannot update toggle named %s due to it was not found.", name));
         }
+
+        LOGGER.info(format("Toggle %s has value changed to %s.", name, value));
 
         notificationService.notify(updatedToggle);
     }
