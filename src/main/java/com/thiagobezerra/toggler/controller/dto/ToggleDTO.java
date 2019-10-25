@@ -2,15 +2,24 @@ package com.thiagobezerra.toggler.controller.dto;
 
 import com.thiagobezerra.toggler.model.Service;
 import com.thiagobezerra.toggler.model.Toggle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@ApiModel(value = "Toggle")
 public class ToggleDTO {
     private String name;
     private Boolean value;
+
+    @ApiModelProperty(notes = "List of services/applications which toggle is restricted to work with.")
     private Set<ServiceDTO> restrictions;
+
+    @ApiModelProperty(notes = "List of services/applications that override toggle value.")
     private Set<ServiceDTO> overrides;
+
+    @ApiModelProperty(notes = "List of services/applications which cannot use toggle even when its value is true.")
     private Set<ServiceDTO> exceptions;
 
     public ToggleDTO() {

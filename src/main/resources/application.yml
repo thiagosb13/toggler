@@ -14,4 +14,4 @@ queue:
 logging:
   level:
     org:
-      springframework: DEBUG
+      springframework: INFO
