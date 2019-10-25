@@ -3,3 +3,10 @@ spring:
     neo4j:
       username: neo4j
       password: test
+  activemq:
+    broker-url: tcp://localhost:61616
+    user:
+    password:
+
+queue:
+  toggle: toggle-queue
