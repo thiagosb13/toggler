@@ -2,6 +2,7 @@ package com.thiagobezerra.toggler.controller;
 
 import com.thiagobezerra.toggler.controller.dto.ToggleDTO;
 import com.thiagobezerra.toggler.service.ToggleService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,18 +27,21 @@ public class ToggleController {
     }
 
     @PostMapping("/toggles")
+    @Secured("ROLE_ADMIN")
     @ResponseStatus(CREATED)
     public String save(@RequestBody ToggleDTO toggleDTO) {
         return toggleService.save(toggleDTO.toToggle());
     }
 
     @PutMapping("/toggles")
+    @Secured("ROLE_ADMIN")
     @ResponseStatus(CREATED)
     public String update(@RequestBody ToggleDTO toggleDTO) {
         return toggleService.update(toggleDTO.toToggle());
     }
 
     @PatchMapping("/toggles/{name}")
+    @Secured("ROLE_ADMIN")
     @ResponseStatus(NO_CONTENT)
     public void changeToggle(@PathVariable String name, @RequestParam(value = "value") Boolean value) {
         toggleService.update(name, value);
