@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -21,6 +23,11 @@ public class ExceptionHandlers extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
         return handleException(NOT_FOUND, ex, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleAccessDenied(RuntimeException ex, WebRequest request) {
+        return handleException(FORBIDDEN, ex, request);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

@@ -10,3 +10,8 @@ spring:
 
 queue:
   toggle: toggle-queue
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
