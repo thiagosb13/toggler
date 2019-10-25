@@ -12,3 +12,22 @@ services:
       - ./neo4j/import:/var/lib/neo4j/import
     environment:
       NEO4J_AUTH: neo4j/test
+
+  activemq:
+    image: webcenter/activemq:latest
+    ports:
+      - "1883:1883"
+      - "5672:5672"
+      - "8161:8161"
+      - "61613:61613"
+      - "61614:61614"
+      - "61616:61616"
+    networks: [backing-services]
+    volumes: ["activemq-data:/opt/activemq/conf", "activemq-data:/data/activemq", "activemq-data:/var/log/activemq"]
+
+volumes:
+  activemq-data: {}
+
+networks:
+  backing-services:
+    driver: bridge
