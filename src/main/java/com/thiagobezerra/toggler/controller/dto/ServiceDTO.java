@@ -1,5 +1,8 @@
 package com.thiagobezerra.toggler.controller.dto;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value = "Service", description = "Service or application configured by toggle")
 public class ServiceDTO {
     private String name;
     private String version;
