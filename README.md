@@ -65,26 +65,26 @@ Without docker it needs to install Neo4J and ActiveMQ latest versions.
 ## Toggle JSON Example
 ```json
     {
-    	"name" : "isButtonBlue",
-    	"value" : true,
-    	"restrictions" : [
-    		{
-    			"name" : "DEF",
-    			"version" : "1.0"
-    		}
-    	],
-    	"overrides" : [
-    		{
-    			"name" : "ABC",
-    			"version" : "1.0"
-    		}
-    	],
-    	"exceptions" : [
-    		{
-    			"name" : "GHI",
-    			"version" : "1.0"
-    		}
-    	]
+      "name" : "isButtonBlue",
+      "value" : true,
+      "restrictions" : [
+        {
+          "name" : "DEF",
+    	  "version" : "1.0"
+    	}
+      ],
+      "overrides" : [
+        {
+    	  "name" : "ABC",
+    	  "version" : "1.0"
+    	}
+      ],
+      "exceptions" : [
+    	{
+    	  "name" : "GHI",
+    	  "version" : "1.0"
+    	}
+      ]
     }
 ```
 
