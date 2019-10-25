@@ -13,7 +13,7 @@ public class ToggleDTO {
     private String name;
     private Boolean value;
 
-    @ApiModelProperty(notes = "List of services/applications which toggle is restricted to work with.")
+    @ApiModelProperty(notes = "List of services/applications which toggle is restricted to work with. When toggle is to all of services, this should be empty.")
     private Set<ServiceDTO> restrictions;
 
     @ApiModelProperty(notes = "List of services/applications that override toggle value.")
