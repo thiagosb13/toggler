@@ -18,7 +18,7 @@
         <java.version>11</java.version>
         <neo4j-harness.version>3.5.12</neo4j-harness.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+        <springfox-swagger-ui.version>2.10.0</springfox-swagger-ui.version>
     </properties>
 
     <dependencies>
